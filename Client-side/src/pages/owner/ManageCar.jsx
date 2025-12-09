@@ -1,0 +1,147 @@
+import React, { useEffect, useState } from "react";
+import Title from "../../components/owner/Title";
+import { assets } from "../../assets/assets";
+import { useCarContext } from "../../Context/context";
+import { toast } from "react-hot-toast";
+
+const ManageCar = () => {
+  const { isOwner, axios, currency } = useCarContext();
+
+  const [cars, setCars] = useState([]);
+
+  const fetchOwnerCars = async () => {
+    try {
+      const { data } = await axios.get("/api/owner/cars");
+      if (data.success) {
+        setCars(data.cars);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    isOwner && fetchOwnerCars();
+  }, [isOwner]);
+
+  const toggleAvailability = async (carId) => {
+    try {
+      const { data } = await axios.post("/api/owner/toggle-availability", {
+        carId,
+      });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerCars();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    isOwner && fetchOwnerCars();
+  }, [isOwner]);
+
+  const deleteCars = async (carId) => {
+    try {
+      const confirm = window.confirm(
+        "Are you sure you want to delete this car?"
+      );
+      if (!confirm) return;
+
+      const { data } = await axios.post("/api/owner/delete-car", { carId });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerCars();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    isOwner && fetchOwnerCars();
+  }, [isOwner]);
+  return (
+    <div className="px-4 pt-10 md:px-10 w-full">
+      <Title
+        title="Manage Cars"
+        subTitle="View all listed cars, update their details,manage bookings and remove them from the platform."
+      />
+      <div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
+        <table>
+          <thead className="text-gray-500">
+            <tr>
+              <th className="p-3 font-medium">Car </th>
+              <th className="p-3 font-medium max-md:hidden">Category</th>
+              <th className="p-3 font-medium">Price</th>
+              <th className="p-3 font-medium max-md:hidden">Status</th>
+              <th className="p-3 font-medium">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cars.map((car, index) => (
+              <tr key={index} className="border-t border-borderColor">
+                <td className="p-3 flex items-center gap-3">
+                  <img
+                    src={car.image}
+                    alt=""
+                    className="w-12 h-12 aspect-square rounded-md object-cover"
+                  />
+                  <div className="max-md:hidden">
+                    <p className="font-medium">
+                      {car.brand} {car.model}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {car.seating_capacity} . {car.transmission}
+                    </p>
+                  </div>
+                </td>
+                <td className="p-3 mx-md:hidden">{car.category}</td>
+                <td className="p-3">
+                  {currency}
+                  {car.pricePerDay}
+                </td>
+                <td className="p-3 mx-md:hidden">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs ${
+                      car.isAvailable
+                        ? "bg-green-100 text-green-500"
+                        : "bg-red-100 text-red-500"
+                    }`}
+                  >
+                    {car.isAvailable ? "Available" : "Not Available"}
+                  </span>
+                </td>
+                <td className="flex items-center p3">
+                  <img
+                    onClick={() => toggleAvailability(car._id)}
+                    src={
+                      car.isAvailable ? assets.eye_close_icon : assets.eye_icon
+                    }
+                    alt=""
+                    className="cursor-pointer"
+                  />
+                  <img
+                    onClick={() => deleteCars(car._id)}
+                    src={assets.delete_icon}
+                    alt=""
+                    className="cursor-pointer"
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default ManageCar;
