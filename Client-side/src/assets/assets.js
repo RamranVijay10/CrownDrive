@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+import logo from "./crowndrive_logo.png";
 import gmail_logo from "./gmail_logo.svg";
 import facebook_logo from "./facebook_logo.svg";
 import instagram_logo from "./instagram_logo.svg";
@@ -103,7 +103,7 @@ export const ownerMenuLinks = [
 
 export const dummyUserData = {
   "_id": "6847f7cab3d8daecdb517095",
-  "name": "GreatStack",
+  "name": "Shubham",
   "email": "admin@example.com",
   "role": "owner",
   "image": user_profile,

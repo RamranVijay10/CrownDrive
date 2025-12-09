@@ -25,7 +25,7 @@ const CarDetails = () => {
       });
       if (data.success) {
         toast.success("Booking created successfully");
-        navigate("/bookings");
+        navigate("/my-bookings");
       } else {
         toast.error(data.message);
       }

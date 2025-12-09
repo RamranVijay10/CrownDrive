@@ -1,3 +1,9 @@
+/**
+ * Global Context Provider
+ * Manages application-wide state including authentication, user data, and car listings
+ * Provides: user, token, axios instance, navigation, car data, booking dates
+ */
+
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -27,10 +33,13 @@ export const CarContextProvider = ({ children }) => {
         setUser(data.user);
         setIsOwner(data.user.role === "owner");
       } else {
-        navigate("/");
+        setUser(null);
+        setIsOwner(false);
       }
     } catch (error) {
-      toast.error(error.message);
+      console.error("Error fetching user:", error.message);
+      setUser(null);
+      setIsOwner(false);
     }
   };
   //   Function to fetch all cars from the server
@@ -59,15 +68,17 @@ export const CarContextProvider = ({ children }) => {
 
   //   Use Effect to retrieve the token from localStorage
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setToken(token);
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+      setToken(storedToken);
+    }
     fetchcars();
   }, []);
 
   //   Useeffect to fetch user data when token is available
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = ` ${token}`;
       fetchUser();
     }
   }, [token]);

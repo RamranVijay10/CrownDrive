@@ -1,11 +1,22 @@
+/**
+ * Authentication Middleware
+ * Handles JWT token verification and user authentication
+ * Protects routes by validating Bearer tokens
+ */
+
 import jwt from "jsonwebtoken";
 import User from "../Models/user.js";
 
 export const protect = async(req,res,next)=>{
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
 
     if(!token){
         return res.json({success:false, message:"Unauthorized"});
+    }
+
+    // Extract token from Bearer format if present
+    if(token.startsWith("Bearer ")){
+        token = token.split(" ")[1];
     }
 
     try {

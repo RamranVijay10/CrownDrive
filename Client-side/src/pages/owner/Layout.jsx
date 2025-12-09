@@ -5,13 +5,14 @@ import { Outlet } from "react-router-dom";
 import { useCarContext } from "../../Context/context";
 
 const Layout = () => {
-  const { isOwner, navigate } = useCarContext();
+  const { isOwner, navigate, user } = useCarContext();
 
   useEffect(() => {
-    if (!isOwner) {
+    // Only redirect if user data has been loaded and user is not an owner
+    if (user !== null && !isOwner) {
       navigate("/");
     }
-  }, [isOwner]);
+  }, [isOwner, user]);
 
   return (
     <div className="flex flex-col">

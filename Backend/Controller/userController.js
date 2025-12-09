@@ -1,4 +1,10 @@
 import bcrypt from "bcrypt";
+/**
+ * User Controller
+ * Handles user authentication, registration, and profile management
+ * Endpoints: register, login, getUserData, getAllCars
+ */
+
 import User from "../Models/user.js";
 import jwt from "jsonwebtoken";
 import Car from "../Models/Car.js";
@@ -65,7 +71,8 @@ export const loginUser = async (req, res) => {
 
 export const getUserData = async (req, res) => {
     try {
-        const {user} = req;
+        const {_id} = req.user;
+        const user = await User.findById(_id).select("-password");
         res.json({success:true, user});
 
 

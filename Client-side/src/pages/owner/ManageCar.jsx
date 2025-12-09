@@ -5,7 +5,7 @@ import { useCarContext } from "../../Context/context";
 import { toast } from "react-hot-toast";
 
 const ManageCar = () => {
-  const { isOwner, axios, currency } = useCarContext();
+  const { isOwner, axios, currency, token } = useCarContext();
 
   const [cars, setCars] = useState([]);
 
@@ -22,9 +22,6 @@ const ManageCar = () => {
       toast.error(error.message);
     }
   };
-  useEffect(() => {
-    isOwner && fetchOwnerCars();
-  }, [isOwner]);
 
   const toggleAvailability = async (carId) => {
     try {
@@ -42,9 +39,6 @@ const ManageCar = () => {
       toast.error(error.message);
     }
   };
-  useEffect(() => {
-    isOwner && fetchOwnerCars();
-  }, [isOwner]);
 
   const deleteCars = async (carId) => {
     try {
@@ -65,9 +59,12 @@ const ManageCar = () => {
       toast.error(error.message);
     }
   };
+
   useEffect(() => {
-    isOwner && fetchOwnerCars();
-  }, [isOwner]);
+    if (token && isOwner) {
+      fetchOwnerCars();
+    }
+  }, [token, isOwner]);
   return (
     <div className="px-4 pt-10 md:px-10 w-full">
       <Title

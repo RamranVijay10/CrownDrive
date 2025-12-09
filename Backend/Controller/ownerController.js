@@ -1,3 +1,9 @@
+/**
+ * Owner Controller
+ * Manages car owner operations including car listings, bookings, and dashboard
+ * Endpoints: registerOwner, addCar, getOwnerCars, toggleCarAvailability, deleteCar, getDashboardData, updateUserImage
+ */
+
 import User from "../Models/user.js";
 import Car from "../Models/Car.js";
 import fs from "fs";
@@ -84,7 +90,7 @@ export const toggleCarAvailability = async (req, res) => {
 
  
         // Checking is Car Belongs to The Owner
-if(car.owner.toString() !== _id){
+if(car.owner.toString() !== _id.toString()){
     return res.json({success:false, message:"You are not authorized to toggle this car availability"});
 }
 
@@ -107,15 +113,13 @@ export const deleteCar = async (req, res) => {
         const car = await Car.findById(carId);
 
         // Checking is Car Belongs to The Owner
-if(car.owner.toString() !== _id){
+if(car.owner.toString() !== _id.toString()){
     return res.json({success:false, message:"You are not authorized to delete this car"});
 }
 
-car.owner = null;
-car.isAvailable = false;
-await car.save();
+await Car.findByIdAndDelete(carId);
 
-        res.json({success:true, message:"CarR Removed"});
+        res.json({success:true, message:"Car Removed"});
     } catch (error) {
         console.log(error.message);
        res.json({success:false, message:error.message});
@@ -131,13 +135,16 @@ export const getDashboardData = async (req, res) => {
             return res.json({success:false, message:"You are not authorized to get dashboard data"});
         }
         const cars = await Car.find({owner:_id});
-        const bookings = await Booking.find({owner:_id}).populate("car").sort({createdAt:-1});
+        const allBookings = await Booking.find({owner:_id}).populate("car").sort({createdAt:-1});
+        
+        // Filter out bookings with null car references
+        const bookings = allBookings.filter(booking => booking.car);
 
-        const pendingBookings = await Booking.find({owner:_id, status:"pending"})
-        const completedBookings = await Booking.find({owner:_id, status:"Confirmed"})
+        const pendingBookings = bookings.filter(booking => booking.status === "pending");
+        const completedBookings = bookings.filter(booking => booking.status === "confirmed");
         
     //    Calculate Total Earnings
-    const monthlyRevenue = bookings.slice().filter(booking => booking.status === "Confirmed").reduce((acc, booking) => acc + booking.totalAmount, 0);
+    const monthlyRevenue = bookings.filter(booking => booking.status === "confirmed").reduce((acc, booking) => acc + booking.totalAmount, 0);
 
     const dashboardData = {
         totalCars: cars.length,

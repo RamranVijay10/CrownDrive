@@ -201,16 +201,18 @@ const AddCar = () => {
             onChange={(e) => setCar({ ...car, location: e.target.value })}
           >
             <option value="">Select Location</option>
-            <option value="New York">New York</option>
-            <option value="Los Angeles">Los Angeles</option>
-            <option value="Chicago">Chicago</option>
-            <option value="Houston">Houston</option>
-            <option value="Phoenix">Phoenix</option>
-            <option value="Philadelphia">Philadelphia</option>
-            <option value="San Antonio">San Antonio</option>
-            <option value="San Diego">San Diego</option>
-            <option value="Dallas">Dallas</option>
-            <option value="San Jose">San Jose</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Pune">Pune</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Haridwar">Haridwar</option>
+            <option value="Dehradun">Dehradun</option>
+            <option value="Ballia">Ballia</option>
+            <option value="Saharanpur">Saharanpur</option>
+            <option value="Rishikesh">Rishikesh</option>
           </select>
         </div>
 

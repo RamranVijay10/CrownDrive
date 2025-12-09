@@ -17,14 +17,18 @@ const Sidebar = () => {
       formData.append("image", image);
       const { data } = await axios.post("/api/owner/update-image", formData);
       if (data.success) {
-        fetchUser();
         toast.success(data.message);
-        setImage("");
+        setImage(""); // Clear local image first
+        // Small delay to ensure database update completes
+        setTimeout(async () => {
+          await fetchUser(); // Wait for user data to refresh
+        }, 500);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       console.log(error.message);
+      toast.error(error.message);
     }
   };
   return (
@@ -32,6 +36,7 @@ const Sidebar = () => {
       <div className="group relative">
         <label htmlFor="image">
           <img
+            key={user?.image || "default"}
             src={
               image
                 ? URL.createObjectURL(image)

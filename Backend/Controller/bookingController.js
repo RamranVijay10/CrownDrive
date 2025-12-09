@@ -1,3 +1,9 @@
+/**
+ * Booking Controller
+ * Handles car booking operations, availability checking, and booking management
+ * Endpoints: checkCarAvailability, createBooking, getUserBookings, getOwnerBookings, changeBookingStatus
+ */
+
 import Booking from "../Models/booking.js";
 import Car from "../Models/Car.js";
 import User from "../Models/user.js";
@@ -7,6 +13,7 @@ import User from "../Models/user.js";
 const checkAvailability = async (car, pickupDate, returnDate) => {
     const bookings = await Booking.find({
         car, 
+        status: {$ne: "cancelled"}, // Exclude cancelled bookings
         pickupDate: {$lte: returnDate}, 
         returnDate: {$gte: pickupDate}});
    return bookings.length === 0;
@@ -108,7 +115,7 @@ export const changeBookingStatus = async (req, res) => {
         const {_id} = req.user;
         const {bookingId, status} = req.body;
         const booking = await Booking.findById(bookingId);
-        if(!booking.owner.toString() !== _id.toString()){
+        if(booking.owner.toString() !== _id.toString()){
             return res.json({success:false, message:"You are not authorized to change this booking status"});
         }
         booking.status = status;
