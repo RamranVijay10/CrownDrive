@@ -1,4 +1,4 @@
-import logo from "./crowndrive_logo.png";
+// Logo removed - using text-based branding
 import gmail_logo from "./gmail_logo.svg";
 import facebook_logo from "./facebook_logo.svg";
 import instagram_logo from "./instagram_logo.svg";
@@ -44,7 +44,7 @@ import car_image4 from "./car_image4.png"
 export const cityList = ['New Delhi', 'Mumbai', 'Haridwar', 'Ballia']
 
 export const assets = {
-    logo,
+    // logo removed - using text-based branding
     gmail_logo,
     facebook_logo,
     instagram_logo,
@@ -102,11 +102,11 @@ export const ownerMenuLinks = [
 ]
 
 export const dummyUserData = {
-  "_id": "6847f7cab3d8daecdb517095",
-  "name": "Shubham",
-  "email": "admin@example.com",
-  "role": "owner",
-  "image": user_profile,
+    "_id": "6847f7cab3d8daecdb517095",
+    "name": "Shubham",
+    "email": "admin@example.com",
+    "role": "owner",
+    "image": user_profile,
 }
 
 export const dummyCarData = [

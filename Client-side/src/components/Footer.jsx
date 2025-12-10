@@ -17,11 +17,15 @@ const Footer = () => {
             transition={{duration:0.6, delay:0.2}}
             className='flex flex-wrap justify-between items-start gap-8 pb-6 border-borderColor border-b'>
                 <div >
-                    <motion.img
+                    <motion.h2
                     initial={{opacity:0}}
                     whileInView={{opacity:1}}
                     transition={{duration:0.65, delay:0.3}}
-                    src={assets.logo} alt="logo" className=' h-8 md:h-9' />
+                    className="text-2xl md:text-3xl font-bold text-primary"
+                    style={{ fontFamily: 'serif' }}
+                    >
+                        CrownDrive
+                    </motion.h2>
                     <motion.p
                     initial={{opacity:0}}
                     whileInView={{opacity:1}}

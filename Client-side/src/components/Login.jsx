@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { setShowLogin, axios, setToken, navigate } = useCarContext();
+  const { setShowLogin, axios, setToken, navigate, fetchUser } = useCarContext();
 
   const [state, setState] = React.useState("login");
   const [name, setName] = React.useState("");
@@ -21,10 +21,19 @@ const Login = () => {
         password,
       });
       if (data.success) {
-        navigate("/");
+        // Set token and save to localStorage
         setToken(data.token);
         localStorage.setItem("token", data.token);
+        
+        // Set authorization header for future requests
+        axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+        
+        // Fetch user data immediately to update UI
+        await fetchUser();
+        
+        // Close login modal and navigate
         setShowLogin(false);
+        navigate("/");
       } else {
         toast.error(data.message);
       }
