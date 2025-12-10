@@ -451,13 +451,42 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 👨‍💻 Author
+## � Screenshots
 
-**Ramran Vijay**
+<div align="center">
+  <img src="screenshots/home_hero.png" alt="Home Page" width="800" />
+  <p><em>Modern & Responsive Home Page</em></p>
+  <br>
+  
+  <img src="screenshots/featured_cars.png" alt="Featured Cars" width="800" />
+  <p><em>Featured Cars Collection</em></p>
+  <br>
 
-- GitHub: [@RamranVijay10](https://github.com/RamranVijay10)
-- LinkedIn: [Your LinkedIn Profile](#)
-- Email: your.email@example.com
+  <img src="screenshots/cars_listing.png" alt="Car Listings" width="800" />
+  <p><em>Advanced Car Formatting & Search</em></p>
+  <br>
+
+  <img src="screenshots/car_details.png" alt="Car Details" width="800" />
+  <p><em>Comprehensive Car Details View</em></p>
+  <br>
+
+  <img src="screenshots/my_bookings.png" alt="My Bookings" width="800" />
+  <p><em>User Booking Management</em></p>
+  <br>
+
+  <img src="screenshots/owner_dashboard.png" alt="Owner Dashboard" width="800" />
+  <p><em>Powerful Owner Dashboard</em></p>
+</div>
+
+---
+
+## �👨‍💻 Author
+
+**Ramran Vijay Pratap Yadav**
+
+- 🔗 **LinkedIn:** [Ramran Vijay Pratap Yadav](https://www.linkedin.com/in/ramran-vijay-pratap-yadav-252400295)
+- 📧 **Email:** [stkhunter01@gmail.com](mailto:stkhunter01@gmail.com)
+- 🐙 **GitHub:** [@RamranVijay10](https://github.com/RamranVijay10)
 
 ---
 
