@@ -478,7 +478,7 @@ If you found this project helpful, please consider:
 - ⭐ Starring the repository
 - 🍴 Forking the project
 - 📢 Sharing with others
-- ☕ [Buy me a coffee](#)
+- 
 
 ---
 
