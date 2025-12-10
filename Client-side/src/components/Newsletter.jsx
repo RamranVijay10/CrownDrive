@@ -1,4 +1,5 @@
 import React from "react";
+import {motion} from "motion/react";
 
 const Newsletter = () => {
   return (  
@@ -13,9 +14,22 @@ const Newsletter = () => {
             `}
     </style>
 
-    <section className="flex flex-col items-center justify-center max-md:px-4 my-10 mb-40">
-      <div className="flex items-center gap-2 text-sm text-indigo-600 bg-indigo-50 rounded-full px-3 py-1">
+    <motion.section 
+    initia3l={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6,ease: "easeOut" }}
+    viewport={{ once: true, amount: 0.3 }}
+    className="flex flex-col items-center justify-center max-md:px-4 my-10 mb-40">
+   <motion.div
+    initia3l={{ opacity: 0, y: 30 }}
+     whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6,ease: "easeOut" }}
+    viewport={{ once: true, amount: 0.3 }}
+      className="flex items-center gap-2 text-sm text-indigo-600 bg-indigo-50 rounded-full px-3 py-1">
         <svg
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }} 
+        transition={{ delay: 0.1, duration:0.5 }}
           width="13"
           height="14"
           viewBox="0 0 13 14"
@@ -30,15 +44,28 @@ const Newsletter = () => {
           />
         </svg>
         <span>Simple Process</span>
-      </div>
-      <h1 className=" md:text-4xl text-2xl font-semibold text-gray-600 mt-4">
+      </motion.div>
+      <motion.h1
+       initial={{ opacity: 0, y: 20 }}
+       whileInView={{ opacity: 1, y: 0 }} 
+       transition={{ delay: 0.2, duration:0.5 }} 
+      
+        className=" md:text-4xl text-2xl font-semibold text-gray-600 mt-4">
         Never Miss a Deal!
-      </h1>
-      <p className="md:text-lg text-center text-slate-500 mt-6">
+      </motion.h1>
+      <motion.p
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }} 
+      transition={{ delay: 0.3, duration:0.5 }}
+       className="md:text-lg text-center text-slate-500 mt-6">
         Never miss a deal again. Get instant notifications for the best deals
         on the market.
-      </p>
-      <form className="relative flex items-center rounded-md border border-slate-200 mt-6 text-sm max-w-md w-full">
+      </motion.p>
+      <motion.form
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }} 
+      transition={{ delay: 0.4, duration:0.5 }}
+       className="relative flex items-center rounded-md border border-slate-200 mt-6 text-sm max-w-md w-full">
         <svg
           className="absolute left-3"
           width="19"
@@ -72,8 +99,9 @@ const Newsletter = () => {
         <button type="submit" className="cursor-pointer shrink-0 mr-2 px-6 py-3 text-sm bg-primary hover:bg-primary-dull rounded-md active:scale-95 transition duration-300 text-white">
           Subscribe now
         </button>
-      </form>
-    </section>
+      </motion.form>
+      
+    </motion.section>
   </>
 );
 };

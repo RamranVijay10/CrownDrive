@@ -42,7 +42,7 @@ const Testimonial = () => {
   ];
 
   const CreateCard = ({ card }) => (
-    <div className="p-4 rounded-lg mx-4 shadow hover:shadow-lg transition-all duration-200 w-72 shrink-0">
+    < div className="p-4 rounded-lg mx-4 shadow hover:shadow-lg transition-all duration-200 w-72 shrink-0">
       <div className="flex gap-2.5">
         <img
           className="size-11 rounded-full"
@@ -70,7 +70,7 @@ const Testimonial = () => {
         </div>
       </div>
       <p className="text-sm py-4 text-gray-800">{card.comment}</p>
-    </div>
+    </div >
   );
 
   return (
