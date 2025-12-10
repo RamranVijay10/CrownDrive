@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
-import { assets } from "../assets/assets";
+import { assets, dummyMyBookingsData } from "../assets/assets";
 import { useCarContext } from "../Context/context";
 import { toast } from "react-hot-toast";
 import {motion} from 'motion/react';
@@ -9,6 +9,7 @@ const MyBooking = () => {
   const { axios, user, currency } = useCarContext();
 
   const [booking, setBooking] = useState([]);
+  
   const fetchMyBookings = async () => {
     try {
       const { data } = await axios.get("/api/bookings/user");
@@ -21,8 +22,14 @@ const MyBooking = () => {
       toast.error(error.message);
     }
   };
+  
   useEffect(() => {
-    user && fetchMyBookings();
+    if (user) {
+      fetchMyBookings();
+    } else {
+      // Show dummy bookings when user is not logged in
+      setBooking(dummyMyBookingsData);
+    }
   }, [user]);
 
   return (

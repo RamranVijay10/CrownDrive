@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { assets } from "../assets/assets";
+import { assets, dummyCarData } from "../assets/assets";
 import Loader from "../components/Loader";
 import { useCarContext } from "../Context/context";
 import { toast } from "react-hot-toast";
@@ -9,7 +9,7 @@ import {motion} from "motion/react";
 const CarDetails = () => {
   const { id } = useParams();
 
-  const { cars, axios, pickupDate, returnDate, setPickupDate, setReturnDate } =
+  const { cars, axios, pickupDate, returnDate, setPickupDate, setReturnDate, user } =
     useCarContext();
 
   const navigate = useNavigate();
@@ -18,6 +18,13 @@ const CarDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if user is logged in before allowing booking
+    if (!user) {
+      toast.error("Please login to book a car");
+      return;
+    }
+    
     try {
       const { data } = await axios.post("/api/bookings/create", {
         car: id,
@@ -34,8 +41,11 @@ const CarDetails = () => {
       toast.error(error.message);
     }
   };
+  
   useEffect(() => {
-    setCar(cars.find((car) => car._id === id));
+    // First try to find in real cars, then in dummy cars
+    const foundCar = cars.find((car) => car._id === id) || dummyCarData.find((car) => car._id === id);
+    setCar(foundCar);
   }, [cars, id]);
 
   return car ? (

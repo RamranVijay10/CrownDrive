@@ -60,6 +60,7 @@ A full-stack **Car Rental Platform** that connects car owners with customers, en
 - 💳 **Transparent Pricing** - Clear pricing with automatic calculation
 - 📖 **Booking History** - Track all your past and current bookings
 - 👤 **Profile Management** - Update profile and upload profile pictures
+- 👁️ **Guest Browsing** - Explore cars and bookings without logging in (dummy data)
 
 ### 🏢 For Car Owners
 
@@ -359,6 +360,27 @@ CarRental/
 - WebP format conversion
 - Responsive image transformations
 - Fast image delivery
+
+### 👁️ Guest Browsing with Dummy Data
+
+**Non-authenticated users can explore the platform without logging in:**
+
+- **Home Page**: View 6 featured dummy cars
+- **Cars Page**: Browse all 4 dummy cars with full details
+- **Car Details**: Click on any car to see complete information
+- **My Bookings**: View 4 sample bookings to understand the booking system
+- **Booking Restriction**: Must login to create actual bookings
+
+**Benefits:**
+- 🎯 Better user experience for first-time visitors
+- 🚀 Showcase platform features without signup friction
+- 🔒 Protected booking system (login required)
+- 📊 Demo-ready for presentations and testing
+
+**Dummy Data Includes:**
+- 4 Sample Cars: BMW X5, Toyota Corolla, Jeep Wrangler, Ford Neo 6
+- 4 Sample Bookings: Mix of confirmed and pending status
+- Complete car details: Images, specs, pricing, features
 
 ---
 

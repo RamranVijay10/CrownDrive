@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Title from "../components/Title";
-import { assets } from "../assets/assets";
+import { assets, dummyCarData } from "../assets/assets";
 import CarCard from "../components/CarCard";
 import { useSearchParams } from "react-router-dom";
 import { useCarContext } from "../Context/context";
@@ -15,7 +15,7 @@ const Cars = () => {
   const pickupDate = searchParams.get("pickupDate");
   const returnDate = searchParams.get("returnDate");
 
-  const { cars, axios } = useCarContext();
+  const { cars, axios, user } = useCarContext();
 
   const [input, setInput] = useState("");
 
@@ -23,11 +23,22 @@ const Cars = () => {
   const [filterCars, setFilterCars] = useState([]);
 
   const applyfilter = async () => {
+    // If user is not logged in, show dummy car data
+    const carsToFilter = user ? cars : dummyCarData;
+    
     if (input === "") {
-      setFilterCars(cars);
+      // If user is logged in, filter cars by owner
+      if (user) {
+        const userCars = carsToFilter.filter((car) => car.owner === user._id);
+        setFilterCars(userCars);
+      } else {
+        // Show all dummy cars if not logged in
+        setFilterCars(carsToFilter);
+      }
       return null;
     }
-    const filtered = cars.slice().filter((car) => {
+    
+    const filtered = carsToFilter.slice().filter((car) => {
       return (
         car.brand.toLowerCase().includes(input.toLowerCase()) ||
         car.model.toLowerCase().includes(input.toLowerCase()) ||
@@ -35,7 +46,14 @@ const Cars = () => {
         car.transmission.toLowerCase().includes(input.toLowerCase())
       );
     });
-    setFilterCars(filtered);
+    
+    // If user is logged in, additionally filter by owner
+    if (user) {
+      const userFiltered = filtered.filter((car) => car.owner === user._id);
+      setFilterCars(userFiltered);
+    } else {
+      setFilterCars(filtered);
+    }
   };
 
   const searchCarAvailability = async () => {
@@ -58,8 +76,12 @@ const Cars = () => {
   }, []);
 
   useEffect(() => {
-    cars.length > 0 && !isSearchData && applyfilter();
-  }, [input, cars]);
+    // Apply filter when cars, input, or user changes
+    // This ensures we show dummy data when not logged in and user cars when logged in
+    if (!isSearchData) {
+      applyfilter();
+    }
+  }, [input, cars, user]);
 
   return (
     <div>
@@ -103,7 +125,7 @@ const Cars = () => {
             <motion.div
             initial={{ opacity: 0,y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.1 * index, duration: 0.4 }}
+            transition={{ duration: 0.1 * index, delay: 0.4 }}
             key={index}>
               <CarCard car={car} />
             </motion.div>

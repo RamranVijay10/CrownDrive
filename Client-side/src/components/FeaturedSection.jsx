@@ -1,6 +1,6 @@
 import React from "react";
 import Title from "./Title";
-import { assets } from "../assets/assets";
+import { assets, dummyCarData } from "../assets/assets";
 import CarCard from "./CarCard";
 import { useNavigate } from "react-router-dom";
 import { useCarContext } from "../Context/context";
@@ -8,7 +8,12 @@ import { motion } from "motion/react";
 
 const FeaturedSection = () => {
   const navigate = useNavigate();
-  const { cars } = useCarContext();
+  const { cars, user } = useCarContext();
+
+  // Show dummy cars if user is not logged in, otherwise show user's cars
+  const displayCars = user 
+    ? cars.filter((car) => car.owner === user._id).slice(0, 6)
+    : dummyCarData.slice(0, 6);
 
   return (
     <motion.div
@@ -31,7 +36,7 @@ const FeaturedSection = () => {
         transition={{ duration: 1, delay: 0.5 }}
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-16"
       >
-        {cars.slice(0, 6).map((car) => (
+        {displayCars.map((car) => (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
